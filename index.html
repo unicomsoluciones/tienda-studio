@@ -30,7 +30,18 @@
   
   <div class="barra"><input id="q" type="search" placeholder="Buscar productos" aria-label="Buscar productos" autocomplete="off"></div>
   
-  <p class="vacio">Todavía no hay productos publicados.</p>
+  <div class="grid"><article class="card" data-c="" data-n="unii ">
+  <a class="foto" href="p/1/" aria-label="Unii"><span class="sinfoto">Sin foto</span></a>
+  <div class="info">
+    <a class="nombre" href="p/1/">Unii</a>
+    <div class="precio">$ 3.509</div>
+    <span class="stock sin">Sin stock</span>
+  </div>
+  <div class="acc">
+    <button class="btn btn-ac" data-accion="agregar" data-id="1" disabled>Sin stock</button>
+    <button class="btn icono" data-accion="compartir" data-id="1" aria-label="Compartir Unii"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+  </div>
+</article></div>
   <p class="vacio" id="sin-resultados" hidden>No encontramos productos con esa búsqueda.</p>
   <div class="pie" style="padding-bottom:0"><button class="btn" data-accion="compartir-tienda">Compartir esta tienda</button></div>
 </main>
@@ -46,7 +57,7 @@
   <div class="cuerpo" id="panel-cuerpo"></div>
   <footer id="panel-pie"></footer>
 </aside>
-<script type="application/json" id="datos">{"base":"https://unicomsoluciones.github.io/tienda-studio","modo":"estatico","urlProducto":"https://unicomsoluciones.github.io/tienda-studio/p/{id}/","urlTienda":"https://unicomsoluciones.github.io/tienda-studio/","estado":"estado.json","nombre":"Unicom Studio","whatsapp":"5493755349119","productos":{}}</script>
+<script type="application/json" id="datos">{"base":"https://unicomsoluciones.github.io/tienda-studio","modo":"estatico","urlProducto":"https://unicomsoluciones.github.io/tienda-studio/p/{id}/","urlTienda":"https://unicomsoluciones.github.io/tienda-studio/","estado":"estado.json","nombre":"Unicom Studio","whatsapp":"5493755349119","productos":{"1":{"n":"Unii","p":3509,"s":null,"sin":true,"st":"Sin stock","f":null}}}</script>
 <script src="assets/tienda.js" defer></script>
 </body>
 </html>
