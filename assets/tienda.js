@@ -3,6 +3,14 @@
   var datosEl = document.getElementById('datos');
   var D = datosEl ? JSON.parse(datosEl.textContent) : { productos: {}, base: location.origin };
   var P = D.productos || {};
+  // Video de la portada: con "ahorro de datos" o conexión muy lenta se deja solo la imagen.
+  try {
+    var cx = navigator.connection;
+    if (cx && (cx.saveData || /(^|-)2g$/.test(cx.effectiveType || ''))) {
+      var vd = document.querySelector('.hero-vid');
+      if (vd) vd.parentNode.removeChild(vd);
+    }
+  } catch (e) { /* sin API de conexión */ }
   var CLAVE = 'unicom_tienda_carrito';
   var ESTATICO = D.modo === 'estatico';
   var carrito = leer();

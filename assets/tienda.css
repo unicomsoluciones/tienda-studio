@@ -93,3 +93,12 @@ body.con-fondo{background-image:linear-gradient(rgba(var(--bg-rgb),var(--velo,.8
 .hero h1{margin:0;font-size:clamp(24px,5vw,40px);line-height:1.15;text-shadow:0 2px 12px rgba(0,0,0,.45)}
 .hero p{margin:6px 0 0;font-size:clamp(15px,2.4vw,19px);max-width:640px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 @media(min-width:760px){.hero{min-height:260px}}
+.hero.con-video{min-height:220px}
+.hero-vid{position:absolute;inset:0;overflow:hidden;container-type:size;background:#000}
+.hero-vid::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.6));pointer-events:none}
+.hero-vid video,.hero-vid iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;border:0;object-fit:cover;pointer-events:none}
+.hero-vid iframe{width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw)}
+.hero.con-video .hero-in{position:relative;z-index:1}
+@media(min-width:760px){.hero.con-video{min-height:340px}}
+@media(prefers-reduced-motion:reduce){.hero-vid{display:none}}
+
