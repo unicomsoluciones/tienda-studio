@@ -102,3 +102,7 @@ body.con-fondo{background-image:linear-gradient(rgba(var(--bg-rgb),var(--velo,.8
 @media(min-width:760px){.hero.con-video{min-height:340px}}
 @media(prefers-reduced-motion:reduce){.hero-vid{display:none}}
 
+.descripcion{margin-top:22px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sombra);color:var(--tx)}
+.descripcion h2{margin:0 0 12px;font-size:18px;color:var(--tx2)}
+.descripcion p{margin:0 0 12px;line-height:1.55;font-size:16px;overflow-wrap:anywhere}
+.descripcion p:last-child{margin-bottom:0}
