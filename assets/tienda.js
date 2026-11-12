@@ -244,5 +244,58 @@
     }).catch(function () {});
   }
 
+  // Galería de la ficha: fotos, video y modelo 3D (el visor 3D se baja recién cuando alguien toca "3D").
+  $$('[data-galeria]').forEach(function (g) {
+    var escena = $('[data-escenario]', g), nombre = g.getAttribute('data-nombre') || '', visorUrl = g.getAttribute('data-visor'), cargandoVisor = null;
+    function cargarVisor() {
+      if (window.customElements && customElements.get('model-viewer')) return Promise.resolve();
+      if (!cargandoVisor) {
+        cargandoVisor = new Promise(function (ok, mal) {
+          var s = document.createElement('script'); s.type = 'module'; s.src = visorUrl;
+          s.onload = function () { customElements.whenDefined('model-viewer').then(ok); };
+          s.onerror = function () { cargandoVisor = null; mal(new Error('visor')); };
+          document.head.appendChild(s);
+        });
+      }
+      return cargandoVisor;
+    }
+    function mostrar(b) {
+      var t = b.getAttribute('data-g'), src = b.getAttribute('data-src'), poster = b.getAttribute('data-poster');
+      $$('.mini', g).forEach(function (m) { m.classList.toggle('on', m === b); });
+      escena.textContent = '';
+      if (t === 'foto') {
+        var im = el('img'); im.src = src; im.alt = nombre; im.setAttribute('data-zoom', ''); escena.appendChild(im);
+      } else if (t === 'video') {
+        var v = document.createElement('video'); v.controls = true; v.playsInline = true; v.preload = 'metadata'; if (poster) v.poster = poster; v.src = src; escena.appendChild(v);
+      } else {
+        var msg = el('span', 'sinfoto', 'Cargando el modelo 3D…'); escena.appendChild(msg);
+        cargarVisor().then(function () {
+          if (!b.classList.contains('on')) return;
+          escena.textContent = '';
+          var m = document.createElement('model-viewer');
+          m.setAttribute('src', src); m.setAttribute('camera-controls', ''); m.setAttribute('auto-rotate', ''); m.setAttribute('shadow-intensity', '1');
+          m.setAttribute('ar', ''); m.setAttribute('touch-action', 'pan-y'); m.setAttribute('alt', 'Modelo 3D de ' + nombre);
+          if (poster) m.setAttribute('poster', poster);
+          escena.appendChild(m);
+          var pista = el('span', 'pista3d', 'Arrastrá para girarlo'); escena.appendChild(pista);
+          setTimeout(function () { if (pista.parentNode) pista.parentNode.removeChild(pista); }, 4000);
+        }).catch(function () { msg.textContent = 'No se pudo cargar el modelo 3D.'; });
+      }
+    }
+    g.addEventListener('click', function (ev) { var b = ev.target.closest('.mini'); if (b && g.contains(b)) mostrar(b); });
+    var activo = $('.mini.on', g);
+    if (activo && activo.getAttribute('data-g') === '3d') mostrar(activo);
+  });
+
+  // Tocar una foto de la ficha la agranda a pantalla completa.
+  document.addEventListener('click', function (ev) {
+    var im = ev.target.closest && ev.target.closest('img[data-zoom]'); if (!im) return;
+    var cap = el('div', 'zoom'); cap.setAttribute('role', 'dialog'); cap.setAttribute('aria-label', 'Foto ampliada');
+    var g = el('img'); g.src = im.src; g.alt = im.alt; cap.appendChild(g);
+    cap.addEventListener('click', function () { if (cap.parentNode) cap.parentNode.removeChild(cap); });
+    document.body.appendChild(cap);
+  });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') { var z = $('.zoom'); if (z && z.parentNode) z.parentNode.removeChild(z); } });
+
   pintarContador();
 })();
